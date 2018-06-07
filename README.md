@@ -72,7 +72,7 @@ After installing the needed dependencies you are done, launch your app with a si
 ```sh
 $ ionic serve
 ```
-## Topic cover in the project
+## Topics cover in the project
 - Tabs Navigation
 - Basic controls(list, grid, input, alert, dialog alert, action sheet, toast....)
 - Modeling Objects
