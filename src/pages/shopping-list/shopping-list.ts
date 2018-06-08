@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, LoadingController, AlertController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { ShoppingListService } from '../../services/shoppingList.service';
 import { Ingredient } from '../../models/ingredient';
@@ -21,7 +21,9 @@ export class ShoppingListPage {
     public navParams: NavParams,
     private shopplingListService: ShoppingListService,
     private popoverCtrl: PopoverController,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ionViewWillEnter() {
@@ -44,21 +46,47 @@ export class ShoppingListPage {
   }
 
   onShowOptions(event: MouseEvent) {
+    const loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    })
     const popover = this.popoverCtrl.create(SLOptionsPage);
     popover.present({ev: event});
     popover.onDidDismiss(
       data => {
         if(data.action == 'load') {
-
-        } else {
+          loading.present()
+          this.authService.getActiveUser().getIdToken()
+            .then(
+              (token: string) => {
+                this.shopplingListService.fetchList(token)
+                  .subscribe(
+                    (list: Ingredient[])=>{
+                      loading.dismiss();
+                      if (list){
+                        this.ingredients = list;
+                      } else {
+                        this.ingredients = [];
+                      }
+                    },
+                    error=> {
+                      loading.dismiss();
+                      this.handleError(error.message);
+                    }
+                  );
+              }
+            );
+        } else if (data.action == 'store') {
+          loading.present();
           this.authService.getActiveUser().getIdToken()
             .then(
               (token: string) => {
                 this.shopplingListService.storeList(token)
                   .subscribe(
-                    ()=>console.log('Success!'),
+                    
+                    ()=>loading.dismiss(),
                     error=> {
-                      console.log(error);
+                      loading.dismiss();
+                      this.handleError(error.message);
                     }
                   );
               }
@@ -66,5 +94,14 @@ export class ShoppingListPage {
         }
       }
     );
+  }
+
+  private handleError(errorMessage: string) {
+    const alert = this.alertCtrl.create({
+      title: 'An errror occured!',
+      message: errorMessage,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }
