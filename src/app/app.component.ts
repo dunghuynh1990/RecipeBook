@@ -7,7 +7,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 @Component({
   templateUrl: 'app.html'

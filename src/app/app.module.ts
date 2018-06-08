@@ -18,6 +18,7 @@ import { ShoppingListService } from '../services/shoppingList.service';
 import { RecipeService } from '../services/recipe.service';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
+import { AuthService } from '../services/auth';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { SignupPage } from '../pages/signup/signup';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ShoppingListService,
-    RecipeService
+    RecipeService,
+    AuthService
   ]
 })
 export class AppModule {}
