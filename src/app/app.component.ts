@@ -8,12 +8,13 @@ import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 
 import firebase from 'firebase/app';
+import { AuthService } from '../services/auth';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  tabsPage:any = TabsPage;
+  rootPage:any = TabsPage;
   signinPage:any = SigninPage;
   signupPage:any = SignupPage;
   isAuthenticated = false;
@@ -23,7 +24,8 @@ export class MyApp {
     platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private authService: AuthService
   ) {
     firebase.initializeApp({
       apiKey: "AIzaSyCgDfCysW6CmYI-RwNxj6op8N6ogyUCemM",
@@ -32,10 +34,12 @@ export class MyApp {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.isAuthenticated = true;
-        this.nav.setRoot(this.tabsPage);
+        // this.nav.setRoot(this.tabsPage);
+        this.rootPage = TabsPage;
       } else {
         this.isAuthenticated = false;
-        this.nav.setRoot(this.signinPage);
+        // this.nav.setRoot(this.signinPage);
+        this.rootPage = this.signinPage;
       }
     });
     platform.ready().then(() => {
@@ -52,8 +56,9 @@ export class MyApp {
   }
 
   onLogout() {
-
+    this.authService.logout();
+    this.menuCtrl.close();
+    this.nav.setRoot(SigninPage);
   }
-
 
 }
