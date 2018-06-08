@@ -7,6 +7,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 
+import firebase from 'firebase';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -22,6 +24,10 @@ export class MyApp {
     splashScreen: SplashScreen,
     private menuCtrl: MenuController
   ) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyCgDfCysW6CmYI-RwNxj6op8N6ogyUCemM",
+      authDomain: "ionic2-recipebook-33542.firebaseapp.com"
+    });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -36,7 +42,7 @@ export class MyApp {
   }
 
   onLogout() {
-    
+
   }
 
 
