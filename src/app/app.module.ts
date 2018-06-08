@@ -16,6 +16,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ShoppingListService } from '../services/shoppingList.service';
 import { RecipeService } from '../services/recipe.service';
+import { SigninPage } from '../pages/signin/signin';
+import { SignupPage } from '../pages/signup/signup';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { RecipeService } from '../services/recipe.service';
     RecipePage,
     RecipesPage,
     ShoppingListPage,
-    Autosize
+    Autosize,
+    SigninPage,
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,9 @@ import { RecipeService } from '../services/recipe.service';
     EditRecipePage,
     RecipePage,
     RecipesPage,
-    ShoppingListPage
+    ShoppingListPage,
+    SigninPage,
+    SignupPage
   ],
   providers: [
     StatusBar,
