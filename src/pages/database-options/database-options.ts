@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { ViewController } from "ionic-angular";
 
 @Component({
-    selector: 'page-sl-options',
-    template: `
+  selector: 'page-db-options',
+  template: `
     <ion-grid text-center>
       <ion-row>
         <ion-col>
@@ -17,17 +17,14 @@ import { ViewController } from "ionic-angular";
       </ion-row>
       <ion-row>
         <ion-col>
-          <button ion-button outline (click)="onAction('store')">Save List</button>
+          <button ion-button outline (click)="onAction('store')">Save List</button>  
         </ion-col>
       </ion-row>
     </ion-grid>
-    `
+  `
 })
-
-export class SLOptionsPage {
-  constructor(
-    private viewCtrl: ViewController,
-  ){}
+export class DatabaseOptionsPage {
+  constructor(private viewCtrl: ViewController) {}
 
   onAction(action: string) {
     this.viewCtrl.dismiss({action: action});

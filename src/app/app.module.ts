@@ -20,8 +20,8 @@ import { RecipeService } from '../services/recipe.service';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 import { AuthService } from '../services/auth';
-import { SLOptionsPage } from '../pages/shopping-list/sl-options/sl-options';
 import { HttpModule } from '@angular/http';
+import { DatabaseOptionsPage } from '../pages/database-options/database-options';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { HttpModule } from '@angular/http';
     Autosize,
     SigninPage,
     SignupPage,
-    SLOptionsPage
+    DatabaseOptionsPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +51,7 @@ import { HttpModule } from '@angular/http';
     ShoppingListPage,
     SigninPage,
     SignupPage,
-    SLOptionsPage
+    DatabaseOptionsPage
   ],
   providers: [
     StatusBar,

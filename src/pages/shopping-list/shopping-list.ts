@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams, PopoverController, LoadingControll
 import { NgForm } from '@angular/forms';
 import { ShoppingListService } from '../../services/shoppingList.service';
 import { Ingredient } from '../../models/ingredient';
-import { SLOptionsPage } from './sl-options/sl-options';
 import { AuthService } from '../../services/auth';
+import { DatabaseOptionsPage } from '../database-options/database-options';
 
 
 @IonicPage()
@@ -49,10 +49,13 @@ export class ShoppingListPage {
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     })
-    const popover = this.popoverCtrl.create(SLOptionsPage);
+    const popover = this.popoverCtrl.create(DatabaseOptionsPage);
     popover.present({ev: event});
     popover.onDidDismiss(
       data => {
+        if (data == null) {
+          return;
+        }
         if(data.action == 'load') {
           loading.present()
           this.authService.getActiveUser().getIdToken()
@@ -70,27 +73,26 @@ export class ShoppingListPage {
                     },
                     error=> {
                       loading.dismiss();
-                      this.handleError(error.message);
+                      this.handleError(error.json().message);
                     }
                   );
               }
             );
         } else if (data.action == 'store') {
           loading.present();
-          this.authService.getActiveUser().getIdToken()
-            .then(
-              (token: string) => {
-                this.shopplingListService.storeList(token)
-                  .subscribe(
-                    
-                    ()=>loading.dismiss(),
-                    error=> {
-                      loading.dismiss();
-                      this.handleError(error.message);
-                    }
-                  );
-              }
-            );
+          this.authService.getActiveUser().getIdToken().then(
+            (token: string) => {
+              this.shopplingListService.storeList(token)
+                .subscribe(
+                  
+                  ()=>loading.dismiss(),
+                  error=> {
+                    loading.dismiss();
+                    this.handleError(error.json().message);
+                  }
+                );
+            }
+          );
         }
       }
     );
